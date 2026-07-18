@@ -173,7 +173,7 @@ connection.connect(function(conn) {
 });
 ```
 
-### Simplifying the above by reducing the number of channels.
+### Simplifying the above by reducing the number of channels
 
 DON'T RUN THIS IF YOU'RE CONNECTED VIA ether1! :)
   Notice how the callback embedding is not needed using the syncronous capability.
@@ -233,4 +233,3 @@ connection.getConnectPromise().then(function(conn) {
 ```
 
 The methods *decodeLength* and *encodeString* were written based on code [here on the Mikrotik Wiki](http://wiki.mikrotik.com/wiki/API_PHP_class#Class).
-
