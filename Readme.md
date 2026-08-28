@@ -3,7 +3,7 @@
   Full-Featured asynchronous Mikrotik API interface for [NodeJS](http://nodejs.org).
 
 ```js
-const MikroNode = require('mikronode-ng');
+const MikroNode = require('@thatoneneji/mikronode-ng');
 
 const connection = MikroNode.getConnection(process.argv[2], process.argv[3], process.argv[4]);
 connection.connect(function(conn) {
@@ -52,12 +52,49 @@ connection.getConnectPromise().then(function(conn) {
 * ES6 Promise support for Connection and Channel
 * TLS Support
 
+## Reconnecting
+
+By default, if the connection to the device drops (network blip, device reboot, etc.)
+you'll get a `close` event and nothing more - reconnecting is up to you. For long-running
+consumers (monitoring, listens) you can instead have the Connection reconnect and
+re-authenticate itself automatically:
+
+```js
+const connection = MikroNode.getConnection(process.argv[2], process.argv[3], process.argv[4], {
+    reconnect: {
+        retries: Infinity,   // default: Infinity
+        delay: 1000,         // default: 1000ms before the first attempt
+        maxDelay: 30000,     // default: 30000ms cap on the backoff
+        factor: 2            // default: 2x delay multiplier per failed attempt
+    }
+});
+// reconnect: true also works and uses all of the defaults above.
+
+connection.on('reconnecting', function (attempt, delay) {
+    console.log('Reconnect attempt ' + attempt + ' in ' + delay + 'ms');
+});
+
+connection.on('reconnected', function (conn) {
+    // Channels do not survive a disconnect - reopen whatever you need here.
+    console.log('Reconnected.');
+});
+
+connection.on('close', function () {
+    // Only reached once reconnect gives up (retries exhausted) or you called
+    // connection.close() yourself - a routine disconnect never gets here when
+    // reconnect is enabled.
+});
+```
+
+`reconnect` has no effect on an explicit `connection.close()` - that always closes for
+good. See `examples/monitorMultipleWithReconnect.js` for a full multi-channel example.
+
 ## Upgrading from versions < 1.0.0
 
 There are 2 changes that will need to be made...
 
 ```js
-const MikroNode = require('mikronode-ng');
+const MikroNode = require('@thatoneneji/mikronode-ng');
 // From
 const connection = new MikroNode(...)
 // To
@@ -75,27 +112,10 @@ channel.closeOnDone = true;
 
 Everything else should work as expected.
 
-## TODO
-
-* [ ] Make changes so that this becomes a node for Node-red
-
 ## API
 
-See the [API JSDocs](doc/index.html) in the doc directory.
-
-## Notes for Node < 22.0.0
-
-MikroNode requires 2 ES6 features that appeared in Node 4.0.0: Promises and WeakMaps.  If
-you're running an earlier version of Node and MikroNode can't find those symbols, it will
-attempt to load them from the 'es6-promise' and 'weakmap' packages respectively.  If you wish
-to use other packages to supply those symbols, require them before requiring mikronode and
-set the global symbols.
-
-```js
-global.WeakMap = require('some-weakmap-polyfill').WeakMap;
-global.Promise = require('some-promise-polyfill').Promise;
-const MikroNode = require('mikronode-ng');
-```
+Generate the JSDocs locally with `npm run documentation` (output goes to `doc/`, which
+is gitignored - it's not checked into the repo).
 
 ## Tests
 
@@ -109,7 +129,7 @@ Promises and listens/cancels.
 ### Connect to a Mikrotik, and add an address to ether1
 
 ```js
-const MikroNode = require('mikronode-ng');
+const MikroNode = require('@thatoneneji/mikronode-ng');
 
 const connection = MikroNode.getConnection('192.168.88.1','admin','password');
 connection.closeOnDone = true;
@@ -133,7 +153,7 @@ connection.connect(function(conn) {
 DON'T RUN THIS IF YOU'RE CONNECTED VIA ether1! :)
 
 ```js
-const MikroNode = require('mikronode-ng');
+const MikroNode = require('@thatoneneji/mikronode-ng');
 const connection = MikroNode.getConnection('192.168.88.1','admin','password');
 
 connection.connect(function(conn) {
@@ -179,7 +199,7 @@ DON'T RUN THIS IF YOU'RE CONNECTED VIA ether1! :)
   Notice how the callback embedding is not needed using the syncronous capability.
 
 ```js
-const MikroNode = require('mikronode-ng');
+const MikroNode = require('@thatoneneji/mikronode-ng');
 
 const connection = MikroNode.getConnection('192.168.88.1','admin','password');
 connection.connect(function(conn) {
@@ -217,7 +237,7 @@ connection.connect(function(conn) {
 // the following line
 //require('es6-promise').polyfill();
 // or globally export Promise from your favorite ES6 compatable Promise library.
-const MikroNode = require('mikronode-ng');
+const MikroNode = require('@thatoneneji/mikronode-ng');
 
 const connection = MikroNode.getConnection(process.argv[2], process.argv[3], process.argv[4], {
     closeOnDone : true

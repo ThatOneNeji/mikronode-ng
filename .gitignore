@@ -6,3 +6,4 @@
 /.project
 package-lock.json
 tmp/
+/doc/
