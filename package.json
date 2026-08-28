@@ -1,48 +1,55 @@
 {
-  "name": "mikronode-ng",
-  "description": "Mikrotik API implemented in Node",
-  "version": "1.0.11",
-  "author": "Brandon Myers <trakkasure@gmail.com>",
-  "contributors": [
-    {
-      "name": "George Joseph",
-      "email": "george.joseph@fairview5.com"
+    "name": "@thatoneneji/mikronode-ng",
+    "description": "Mikrotik API implemented in Node",
+    "version": "1.1.0",
+    "author": "ThatOneNeji",
+    "license": "MIT",
+    "keywords": [
+        "mikrotik",
+        "socket",
+        "api"
+    ],
+    "repository": "git://github.com/ThatOneNeji/mikronode-ng",
+    "bugs": "https://github.com/ThatOneNeji/mikronode-ng/issues",
+    "homepage": "https://github.com/ThatOneNeji/mikronode-ng#readme",
+    "main": "lib/index",
+    "files": [
+        "lib/",
+        "Readme.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "start": "node lib/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "documentation": "./node_modules/.bin/jsdoc -c jsdoc.json lib/*.js",
+        "lint": "./node_modules/.bin/eslint lib/*.js"
+    },
+    "engines": {
+        "node": ">= 22.0.0"
+    },
+    "directories": {
+        "lib": "lib",
+        "doc": "doc",
+        "example": "examples"
+    },
+    "devDependencies": {
+        "eslint": "^10.9.1",
+        "eslint-config-google": "^0.14.0",
+        "grunt": "^1.6.3",
+        "grunt-contrib-clean": "^2.0.1",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-git": "^1.1.1",
+        "grunt-jsdoc": "^2.4.1",
+        "grunt-shell": "^4.0.0",
+        "jaguarjs-jsdoc": "1.1.0",
+        "jsdoc": "^4.0.5"
+    },
+    "dependencies": {
+        "debug": "^4.4.3",
+        "private-parts": "^0.4.1"
+    },
+    "optionalDependencies": {
+        "es6-promise": "^4.2.8",
+        "weakmap": "0.0.6"
     }
-  ],
-  "homepage": "http://f5eng.github.io/mikronode-ng",
-  "license": "MIT",
-  "keywords": [
-    "mikrotik",
-    "socket",
-    "api"
-  ],
-  "repository": "git://github.com/f5eng/mikronode-ng",
-  "bugs": "https://github.com/f5eng/mikronode-ng/issues",
-  "main": "lib/index",
-  "engines": {
-    "node": ">= 0.10.36"
-  },
-  "directories": {
-    "lib": "lib",
-    "doc": "doc",
-    "example": "examples"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.7.0",
-    "grunt-contrib-copy": "^0.8.2",
-    "grunt-git": "^0.3.7",
-    "grunt-jsdoc": "^1.1.0",
-    "grunt-shell": "^1.1.2",
-    "jaguarjs-jsdoc": "0.0.1",
-    "jsdoc": "^3.4.0"
-  },
-  "dependencies": {
-    "debug": "^2.2.0",
-    "private-parts": "^0.4.1"
-  },
-  "optionalDependencies": {
-    "es6-promise": "^3.0.2",
-    "weakmap": "0.0.6"
-  }
 }

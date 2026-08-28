@@ -4,3 +4,6 @@
 /.tern-project
 /.sublime-project
 /.project
+package-lock.json
+tmp/
+/doc/
