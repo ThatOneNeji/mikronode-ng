@@ -1,7 +1,7 @@
 {
     "name": "@thatoneneji/mikronode-ng",
     "description": "Mikrotik API implemented in Node",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "author": "ThatOneNeji",
     "license": "MIT",
     "keywords": [
