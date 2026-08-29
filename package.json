@@ -9,7 +9,10 @@
         "socket",
         "api"
     ],
-    "repository": "git://github.com/ThatOneNeji/mikronode-ng",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ThatOneNeji/mikronode-ng.git"
+    },
     "bugs": "https://github.com/ThatOneNeji/mikronode-ng/issues",
     "homepage": "https://github.com/ThatOneNeji/mikronode-ng#readme",
     "main": "lib/index",
@@ -21,8 +24,8 @@
     "scripts": {
         "start": "node lib/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "documentation": "./node_modules/.bin/jsdoc -c jsdoc.json lib/*.js",
-        "lint": "./node_modules/.bin/eslint lib/*.js"
+        "documentation": "jsdoc -c jsdoc.json lib/*.js",
+        "lint": "eslint lib/*.js"
     },
     "engines": {
         "node": ">= 22.0.0"
