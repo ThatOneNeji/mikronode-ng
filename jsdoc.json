@@ -4,13 +4,18 @@
     },
     "source": {
         "includePattern": ".+\\.js(doc|x)?$",
-        "exclude": ["node_modules", "lib/node_modules"],
+        "exclude": [
+            "node_modules",
+            "lib/node_modules"
+        ],
         "excludePatterns": "(^|\\/|\\\\|node_modules)"
     },
-    "plugins": ["plugins/markdown"],
+    "plugins": [
+        "plugins/markdown"
+    ],
     "templates": {
         "cleverLinks": false,
-        "systemName": "netstats - MySQL Loader",
+        "systemName": "@thatoneneji/mikronode-ng",
         "monospaceLinks": false,
         "dateFormat": "YYYY/MM/DD",
         "navType": "inline",

@@ -10,7 +10,11 @@ let connection = MikroNode.getConnection(process.argv[2], process.argv[3], proce
 connection.connect(function (conn) {
     const chan = conn.openChannel();
     conn.closeOnDone = true;
-    chan.write(['/ip/address/print', '=interval=5'], function () {
+    // No =interval= here - that switches print into a periodic-repeat mode which
+    // emits via 'read', not 'done' (confirmed this session on /ip/route/print, and it
+    // generalizes to print commands broadly) - this file only listens for 'done', so
+    // with =interval= set it produced no output at all, ever, on a real device.
+    chan.write('/ip/address/print', function () {
         chan.closeOnDone = true;
         chan.on('done', function (data) {
             let parsed = MikroNode.parseItems(data);

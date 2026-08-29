@@ -42,7 +42,10 @@ connection.on('close', function () {
  */
 function openMonitorChannels() {
     const traffic = connection.openChannel();
-    traffic.write('/interface/monitor-traffic', { interface: testInterface, interval: '1' }, function () {
+    // Object-form params are NOT auto-prefixed with '=' - RouterOS traps with
+    // "missing =interface=" if you pass plain `interface`/`interval` keys here.
+    // Confirmed against a real device.
+    traffic.write('/interface/monitor-traffic', { '=interface': testInterface, '=interval': '1' }, function () {
         console.log('Monitoring traffic on ' + testInterface);
     });
     traffic.on('read', function (data) {
@@ -63,6 +66,19 @@ function openMonitorChannels() {
     });
     routes.on('read', function (data) {
         console.log('route: ' + JSON.stringify(MikroNode.parseItems(data)));
+    });
+
+    // Channel independently listens for the Connection's own 'error' and re-emits it
+    // on itself - an EventEmitter 'error' event with no listener throws as an
+    // uncaught exception and crashes the whole process. Confirmed the hard way: this
+    // is exactly what happens if you skip this on a long-running monitor channel and
+    // the device drops mid-session. The Connection-level 'error' handler above already
+    // reports it; these just need to exist so the re-emission doesn't crash.
+    [traffic, wifiReg, routes].forEach(function (channel) {
+        channel.on('error', function () {});
+        channel.on('trap', function (trap) {
+            console.error('Channel ' + channel.id + ' trap: ' + JSON.stringify(trap));
+        });
     });
 }
 

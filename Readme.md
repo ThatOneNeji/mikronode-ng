@@ -26,7 +26,7 @@ connection.connect(function(conn) {
     });
 });
 
-    /* Now let's do this with Promises */
+/* Now let's do this with Promises */
 
 const connection = MikroNode.getConnection(process.argv[2], process.argv[3], process.argv[4], {
     closeOnDone : true
@@ -88,29 +88,6 @@ connection.on('close', function () {
 
 `reconnect` has no effect on an explicit `connection.close()` - that always closes for
 good. See `examples/monitorMultipleWithReconnect.js` for a full multi-channel example.
-
-## Upgrading from versions < 1.0.0
-
-There are 2 changes that will need to be made...
-
-```js
-const MikroNode = require('@thatoneneji/mikronode-ng');
-// From
-const connection = new MikroNode(...)
-// To
-const connection = MikroNode.getConnection(...)
-// or
-const connection = new MikroNode.Connection(...)
-
-// From
-connection.closeOnDone(true);
-channel.closeOnDone(true);
-// To
-connection.closeOnDone = true;
-channel.closeOnDone = true;
-```
-
-Everything else should work as expected.
 
 ## API
 
