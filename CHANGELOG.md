@@ -6,17 +6,20 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-29
+
+### Added
+
+- `examples/monitorLog.js`: `/log/print` in `follow-only` (new entries only, the default) or `follow`
+  (all previous entries, then new ones) mode.
+- `CHANGELOG.md`, included in the npm package.
+
 ### Fixed
 
 - Named channels (`connection.openChannel('log')`) now receive `read`/`data` events. Rows were only
   delivered to channels with a numeric id, so a named channel running a streaming command
   (`follow`, `monitor-traffic`, `listen`, ...) silently got nothing. Commands that end with `done` were
   not affected.
-
-### Added
-
-- `examples/monitorLog.js`: `/log/print` in `follow-only` (new entries only, the default) or `follow`
-  (all previous entries, then new ones) mode.
 
 ### Changed
 
@@ -88,7 +91,8 @@ First release of the fork, published as `@thatoneneji/mikronode-ng`.
 Releases of the original [`mikronode-ng`](https://github.com/gtjoseph/mikronode-ng) by Brandon Myers
 and George Joseph.
 
-[Unreleased]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.4.0...develop
+[Unreleased]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.5.0...develop
+[1.5.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.1.0...v1.2.0
