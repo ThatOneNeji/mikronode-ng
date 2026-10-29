@@ -50,22 +50,14 @@ Keep them in step with the plugin (`monitorTraffic`, `monitorRoutes`, `monitorWi
 
 ## History
 
-- **Up to 1.0.11** - upstream (gtjoseph) work: trap clearing, `closeOnDone` with multiple channels, keepalive delay.
-- **2026-08 (pre-1.1.0)** - `lib/` passes eslint, docs updated, new examples.
-- **`ac0ccde` (2026-08-26)** - disconnect detection + reconnect. `lib/connection.js` never listened for the
-  socket's `close` event, so a clean device-side disconnect went unnoticed. Added the `reconnect` option
-  and events, and the parser-state reset. (The commit message, "Added new example
-  monitorMultipleWithReconnect", undersells it.)
-- **1.1.0 (2026-08-28, PR #1)** - LICENSE, Readme, generated `doc/` removed from the repo.
-- **1.2.0 (2026-08-29)** - RouterOS 7.x only.
-- **1.3.0 (2026-08-29)** - `error` events when running commands; number parsing changed.
-- **1.4.0 (2026-08-29)** - examples reworked to match node-red-contrib-mikronode-ng; minor fixes.
-- **After 1.4.0** - `examples/monitorLog.js`: `/log/print` with `=follow-only=` (new entries only, default)
-  or `=follow=` (history, then new entries). Never sends `done`, so it turns `saveBuffer` off in the write
-  callback. The other `monitor*.js` examples likely need the same.
-- **Named channels fixed (after 1.4.0)** - `Connection.sentence()` only passed `!re` rows to a channel when
-  `currentChannelId >= 0`, so a named channel (`openChannel('log')`) never got `read`/`data` events (only
-  `done`). It now checks that the channel exists. Before this, every example used unnamed (numeric) channels.
+Version history is in `CHANGELOG.md` (Keep a Changelog format). Add each user-visible change under
+`[Unreleased]` in the same commit; on release, rename it to the version and date and add the compare link.
+Notes the changelog doesn't carry:
+
+- `ac0ccde` ("Added new example monitorMultipleWithReconnect") is actually the reconnect / disconnect
+  detection work in `lib/connection.js`.
+- Named channels never received `!re` rows before the post-1.4.0 fix (only `done`); every example used
+  unnamed numeric channels, so it went unnoticed.
 
 ## Long-running commands
 
