@@ -7,6 +7,22 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Fixed
+
+- **Replies of several channels on one connection no longer get mixed up.** Incoming data was
+  collected per TCP chunk rather than per sentence and handed to whichever channel's `.tag` came last,
+  so with several busy channels (e.g. a `print` snapshot next to `monitor-traffic` and `/log/print
+  =follow=`), rows turned up in another channel's `read`/`done` and went missing from their own. Each
+  sentence is now split off at its terminating empty word and routed by its own `.tag`. Words split
+  across TCP chunks, including multi-byte UTF-8 characters, are reassembled before decoding.
+- `parseItems()` no longer empties the row arrays it is given. A `read` listener that parsed its rows
+  left empty rows behind in the channel's buffer, so the `done` that followed lost them.
+
+### Added
+
+- `npm test`: unit tests for sentence parsing and channel routing (`test/*.test.js`, Node's built-in
+  test runner, no device needed).
+
 ## [1.6.0] - 2026-11-04
 
 ### Added
