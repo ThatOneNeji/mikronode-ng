@@ -7,6 +7,11 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+### Added
+
+- `examples/monitorWifiCfg.js`: wifi interface configuration, old (`/caps-man/actual-interface-configuration`)
+  or new (`/interface/wifi`) CAPsMAN, change-only (snapshot + `listen`) or periodic (`print =interval=`).
+
 ### Fixed
 
 - Long-running examples (`monitorTraffic`, `monitorRoutes`, `monitorWifiRegistration`, `monitorOvpnClient`,

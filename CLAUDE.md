@@ -46,7 +46,8 @@ depends on this library. Keep this library generic; Node-RED-specific code belon
 `examples/` doubles as the debugging reference for the plugin's nodes: each `monitor*.js` mirrors one
 plugin node so a RouterOS upgrade can be checked against the API layer on its own, without Node-RED.
 Keep them in step with the plugin (`monitorTraffic`, `monitorRoutes`, `monitorWifiRegistration`,
-`monitorOvpnClient`, `monitorLog`, `getInformation`, ...).
+`monitorOvpnClient`, `monitorLog`, `monitorWifiCfg`, `getInformation`, ...). `monitorWifiCfg` is ahead of
+the plugin: its `mikrotik-wifi-config` node doesn't exist yet.
 
 ## History
 
