@@ -41,10 +41,15 @@ connection.connect(function () {
     console.log('Connected. CAPsMAN: ' + capsman + '.');
     if (interval) {
         console.log('Periodic mode: full table every ' + interval + 's - Ctrl-C to stop.');
-        channel.write(basePath + '/print', { '=interval': interval }, function () {});
+        channel.write(basePath + '/print', { '=interval': interval }, function (ch) {
+            ch.saveBuffer = false;
+        });
     } else {
         console.log('Change-only mode: snapshot now, then updates as clients register/deregister - Ctrl-C to stop.');
         channel.write(basePath + '/print', function () {});
-        channel.write(basePath + '/listen', function () {});
+        // Only the listen stops buffering: the print snapshot above still needs it for 'done'.
+        channel.write(basePath + '/listen', function (ch) {
+            ch.saveBuffer = false;
+        });
     }
 });

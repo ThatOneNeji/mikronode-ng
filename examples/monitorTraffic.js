@@ -22,7 +22,10 @@ connection.on('error', function (err) {
 connection.connect(function () {
     console.log('Connected. Monitoring ' + iface + ' every ' + interval + 's - Ctrl-C to stop.');
     const channel = connection.openChannel();
-    channel.write('/interface/monitor-traffic', { '=interface': iface, '=interval': interval }, function () {});
+    // Long-running (never sends 'done'): stop buffering rows - see CLAUDE.md "Long-running commands".
+    channel.write('/interface/monitor-traffic', { '=interface': iface, '=interval': interval }, function (ch) {
+        ch.saveBuffer = false;
+    });
     channel.on('read', function (data) {
         console.log(JSON.stringify(MikroNode.parseItems(data)));
     });

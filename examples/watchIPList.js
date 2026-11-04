@@ -57,6 +57,7 @@ function connCallback(connection) {
     });
 
     o.write('/ip/address/listen', function (channel) {
+        channel.saveBuffer = false; // listen never sends 'done' - see CLAUDE.md "Long-running commands".
         console.log('Listening to ip changes.');
         console.log('Press CTRL-C to stop listening.');
         channel.on('done', function () {

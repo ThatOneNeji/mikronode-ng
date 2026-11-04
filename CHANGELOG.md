@@ -1,3 +1,4 @@
+<!-- markdownlint-configure-file { "MD024": { "siblings_only": true } } -->
 # Changelog
 
 All notable changes to `@thatoneneji/mikronode-ng` are listed here.
@@ -5,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Fixed
+
+- Long-running examples (`monitorTraffic`, `monitorRoutes`, `monitorWifiRegistration`, `monitorOvpnClient`,
+  `monitorMultipleWithReconnect`, `watchIPList`) now set `saveBuffer = false` on commands that never
+  send `done` (`listen`, `monitor`, `=interval=`), so they no longer keep every row in memory. One-off
+  `print` snapshots still buffer, since their `done` event delivers the whole table.
 
 ## [1.5.0] - 2026-10-29
 

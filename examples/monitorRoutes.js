@@ -40,10 +40,15 @@ connection.connect(function () {
 
     if (interval) {
         console.log('Connected. Periodic mode: full table every ' + interval + 's - Ctrl-C to stop.');
-        channel.write('/ip/route/print', { '=interval': interval }, function () {});
+        channel.write('/ip/route/print', { '=interval': interval }, function (ch) {
+            ch.saveBuffer = false;
+        });
     } else {
         console.log('Connected. Change-only mode: snapshot now, then updates as routes change - Ctrl-C to stop.');
         channel.write('/ip/route/print', function () {});
-        channel.write('/ip/route/listen', function () {});
+        // Only the listen stops buffering: the print snapshot above still needs it for 'done'.
+        channel.write('/ip/route/listen', function (ch) {
+            ch.saveBuffer = false;
+        });
     }
 });

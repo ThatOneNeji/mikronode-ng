@@ -45,7 +45,10 @@ function openMonitorChannels() {
     // Object-form params are NOT auto-prefixed with '=' - RouterOS traps with
     // "missing =interface=" if you pass plain `interface`/`interval` keys here.
     // Confirmed against a real device.
-    traffic.write('/interface/monitor-traffic', { '=interface': testInterface, '=interval': '1' }, function () {
+    // None of these three commands ever sends 'done', so each turns saveBuffer off -
+    // see CLAUDE.md "Long-running commands".
+    traffic.write('/interface/monitor-traffic', { '=interface': testInterface, '=interval': '1' }, function (ch) {
+        ch.saveBuffer = false;
         console.log('Monitoring traffic on ' + testInterface);
     });
     traffic.on('read', function (data) {
@@ -53,7 +56,8 @@ function openMonitorChannels() {
     });
 
     const wifiReg = connection.openChannel();
-    wifiReg.write('/interface/wifi/registration-table/listen', function () {
+    wifiReg.write('/interface/wifi/registration-table/listen', function (ch) {
+        ch.saveBuffer = false;
         console.log('Monitoring wifi registration table');
     });
     wifiReg.on('read', function (data) {
@@ -61,7 +65,8 @@ function openMonitorChannels() {
     });
 
     const routes = connection.openChannel();
-    routes.write('/ip/route/listen', function () {
+    routes.write('/ip/route/listen', function (ch) {
+        ch.saveBuffer = false;
         console.log('Monitoring routes');
     });
     routes.on('read', function (data) {

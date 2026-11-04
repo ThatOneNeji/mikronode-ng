@@ -42,7 +42,10 @@ connection.connect(function () {
 function monitor(name) {
     console.log('Monitoring ' + name + ' - press Ctrl-C to stop.');
     const mon = connection.openChannel();
-    mon.write('/interface/ovpn-client/monitor', { '=.id': name, '=interval': '5' }, function () {});
+    // Long-running (never sends 'done'): stop buffering rows - see CLAUDE.md "Long-running commands".
+    mon.write('/interface/ovpn-client/monitor', { '=.id': name, '=interval': '5' }, function (ch) {
+        ch.saveBuffer = false;
+    });
     mon.on('read', function (data) {
         console.log(name + ': ' + JSON.stringify(MikroNode.parseItems(data)));
     });
