@@ -4,6 +4,9 @@ const MikroNode = require('../lib/index.js');
 const c1 = MikroNode.getConnection(process.argv[2], process.argv[3], process.argv[4], {
     timeout: 0
 });
+c1.on('error', function (err) {
+    console.error('Connection error: ' + err);
+});
 
 let ipList = {};
 function ipOutput(p) {

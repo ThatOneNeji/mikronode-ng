@@ -13,6 +13,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   `monitorMultipleWithReconnect`, `watchIPList`) now set `saveBuffer = false` on commands that never
   send `done` (`listen`, `monitor`, `=interval=`), so they no longer keep every row in memory. One-off
   `print` snapshots still buffer, since their `done` event delivers the whole table.
+- `examples/watchIPList.js` reports connection errors (e.g. an unreachable host) instead of crashing with
+  an unhandled `error` event.
 
 ## [1.5.0] - 2026-10-29
 
