@@ -14,14 +14,18 @@ depends on this library. Keep this library generic; Node-RED-specific code belon
 
 - `npm run lint` - ESLint, flat config in `eslint.config.js`.
 - `npm run documentation` - JSDoc into `doc/` (git-ignored, no longer committed).
-- `node examples/<name>.js <host> <user> <password> [...]` - examples against a real device; there is
-  no automated test suite (`npm test` is a stub, `test/test1.js` is a legacy manual script).
+- `npm test` - unit tests (`node --test test/*.test.js`): sentence parsing and channel routing, fed raw
+  frames, no device. `test/test1.js` is a legacy manual script, not part of it.
+- `node examples/<name>.js <host> <user> <password> [...]` - examples against a real device.
 
 ## Architecture
 
 - `lib/index.js` - entry point: `getConnection(host, user, password, options)`, `parseItems`,
   `Connection`, `Channel`.
 - `lib/connection.js` - socket, sentence parser, login state machine, channel management, reconnect.
+  `_read()` splits the byte stream into sentences (a zero-length word ends one); `sentence()` routes each
+  by its own `.tag`. Never route by TCP chunk: with several busy channels one chunk holds sentences of
+  many channels.
 - `lib/channel.js` - one tagged command stream; emits `data`/`read`/`done`/`trap`/`error`, with the
   channel itself as the 2nd argument so consumers can read `channel.id`.
 - `lib/trap.js`, `lib/utils.js` - trap/error types and helpers. Private state uses `private-parts` (`_(this)`).
