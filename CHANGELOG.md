@@ -7,6 +7,8 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-04
+
 ### Added
 
 - `examples/monitorWifiCfg.js`: wifi interface configuration, old (`/caps-man/actual-interface-configuration`)
@@ -106,7 +108,8 @@ First release of the fork, published as `@thatoneneji/mikronode-ng`.
 Releases of the original [`mikronode-ng`](https://github.com/gtjoseph/mikronode-ng) by Brandon Myers
 and George Joseph.
 
-[Unreleased]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.5.0...develop
+[Unreleased]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.6.0...develop
+[1.6.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/ThatOneNeji/mikronode-ng/compare/v1.2.0...v1.3.0
